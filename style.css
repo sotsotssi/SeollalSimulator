@@ -1,0 +1,498 @@
+:root {
+    --primary-color: #a83f3f;
+    --secondary-color: #dcb696;
+    --bg-color: #fdfbf7;
+    --text-color: #3e322b;
+    --sub-text-color: #7b6f66;
+    --accent-color: #e6b333;
+    --shadow-soft: 0 4px 12px rgba(62, 50, 43, 0.08);
+    --border-radius: 16px;
+    --room-bg: #fffcf5;
+    --room-border: #ebdccb;
+}
+
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Gowun Dodum', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+h1, h2, h3, .serif {
+    font-family: 'Gowun Batang', serif;
+}
+
+/* --- Header --- */
+header {
+    padding: 1rem;
+    text-align: center;
+    background: rgba(253, 251, 247, 0.95);
+    border-bottom: 1px solid var(--room-border);
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    width: 60px;
+}
+
+.header-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.header-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.info-btn {
+    background: none;
+    border: none;
+    color: var(--sub-text-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.day-badge {
+    background-color: var(--text-color);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* --- Main Content Area --- */
+main {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    padding-bottom: 80px;
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* --- Tab Navigation --- */
+.tab-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid var(--room-border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+    z-index: 100;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--sub-text-color);
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-btn i {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* --- Views --- */
+.view {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Input Area --- */
+.input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+}
+
+input {
+    flex: 1;
+    border: none;
+    padding: 12px;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: 1rem;
+    outline: none;
+}
+
+button.add-btn {
+    background-color: var(--text-color);
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-family: 'Gowun Batang', serif;
+    cursor: pointer;
+}
+
+.char-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+}
+
+.char-card {
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--room-border);
+    position: relative;
+}
+
+.char-avatar {
+    width: 48px;
+    height: 48px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+}
+
+.char-name {
+    font-weight: bold;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: #ccc;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Data Controls */
+.data-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--room-border);
+}
+
+.control-btn {
+    padding: 10px;
+    border: 1px solid var(--room-border);
+    background: white;
+    border-radius: 8px;
+    color: var(--sub-text-color);
+    font-family: 'Gowun Dodum', sans-serif;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    background: var(--room-bg);
+    border-color: var(--secondary-color);
+}
+
+.control-btn.danger {
+    color: #a83f3f;
+    border-color: #ffd6d6;
+}
+
+/* --- Room Map --- */
+.room-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 80px;
+}
+
+.room {
+    background-color: var(--room-bg);
+    border: 1px solid var(--room-border);
+    border-radius: var(--border-radius);
+    min-height: 200px;
+    padding: 16px;
+    padding-bottom: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.room-title {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: var(--sub-text-color);
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 2px 6px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.room-chars {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+    gap: 30px 8px; 
+    padding-top: 10px;
+}
+
+.mini-char {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60px;
+    position: relative;
+    cursor: pointer;
+}
+
+.mini-char .head {
+    width: 36px;
+    height: 36px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.mini-char .bubble {
+    position: absolute;
+    top: -15px;
+    background: white;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 5;
+    opacity: 0;
+    animation: popIn 0.3s forwards;
+    pointer-events: none;
+    border: 1px solid var(--room-border);
+}
+
+.mini-char .bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: var(--room-border) transparent transparent transparent;
+}
+
+.mini-char .bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px 5px 0;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+    z-index: 1;
+}
+
+.mini-char.duo .head {
+    border-color: var(--accent-color);
+}
+
+@keyframes popIn {
+    to { opacity: 1; top: -40px; }
+}
+
+/* --- Logs --- */
+.log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.log-item {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.log-item.success { border-left-color: #6fb98f; }
+.log-item.fail { border-left-color: var(--primary-color); }
+.log-item.normal { border-left-color: #ccc; } 
+
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 0.8rem;
+    color: var(--sub-text-color);
+}
+
+.log-content {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.log-relation {
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    background: #fff0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.log-relation.plus {
+    color: #2d7a4b;
+    background: #eafff0;
+}
+
+/* --- Next Day Button --- */
+.next-day-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(168, 63, 63, 0.4);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.next-day-btn:active {
+    transform: scale(0.95);
+}
+
+.empty-state {
+    text-align: center;
+    color: #aaa;
+    padding: 40px 0;
+    font-size: 0.9rem;
+}
+
+/* --- Modal for Character Details --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.modal {
+    background: white;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    border-radius: 16px;
+    padding: 24px;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.modal h3 { margin-top: 0; font-family: 'Gowun Batang', serif; color: var(--primary-color);}
+
+.rel-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+.rel-score { font-weight: bold; }
+.rel-label { font-size: 0.8rem; color: #888; }
+
+.info-content p {
+    margin: 8px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+.info-content strong {
+    color: var(--text-color);
+}
+.info-link {
+    color: var(--sub-text-color);
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-bottom: 1px dashed #ccc;
+}

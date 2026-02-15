@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>설날 시뮬레이터</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left"></div>
+        <div class="header-title">설날 시뮬레이터: 설날의 풍경</div>
+        <div class="header-right">
+            <a href="https://x.com/bb_uu_t" target="_blank" style="color: var(--sub-text-color); font-size: 0.9rem; text-decoration: none;">@bb_uu_t</a>
+            <button class="info-btn" onclick="openInfoModal()">
+                <i class="fas fa-info-circle"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Tab 1: 명단 (Roster) -->
+            <div id="view-roster" class="view active">
+                <div class="input-group">
+                    <input type="text" id="charInput" placeholder="이름을 입력하세요." maxlength="6" onkeypress="handleEnter(event)">
+                    <button class="add-btn" onclick="addCharacter()">등록</button>
+                </div>
+                <div class="char-list" id="charList">
+                    <!-- Character Cards go here -->
+                </div>
+                <p class="empty-state" id="emptyState">여러 인물들을 등록하고 설날 풍경을 관찰해보세요.<br>최대 인원은 30명입니다.</p>
+
+                <!-- Update 2: Data Controls -->
+                <div class="data-controls" id="dataControls" style="display:none;">
+                    <button class="control-btn" onclick="saveData()"><i class="fas fa-save"></i> 명단 저장</button>
+                    <button class="control-btn" onclick="loadData()"><i class="fas fa-download"></i> 불러오기</button>
+                    <button class="control-btn" onclick="resetRoster()"><i class="fas fa-redo"></i> 관계 리셋</button>
+                    <button class="control-btn danger" onclick="hardReset()"><i class="fas fa-trash"></i> 데이터 초기화</button>
+                </div>
+            </div>
+
+            <!-- Tab 2: 방 (Map) -->
+            <div id="view-map" class="view">
+                <div class="room-grid">
+                    <div class="room" id="room-living">
+                        <div class="room-title"><span><i class="fas fa-couch"></i> 거실</span></div>
+                        <div class="room-chars" id="chars-living"></div>
+                    </div>
+                    <div class="room" id="room-kitchen">
+                        <div class="room-title"><span><i class="fas fa-utensils"></i> 부엌</span></div>
+                        <div class="room-chars" id="chars-kitchen"></div>
+                    </div>
+                    <div class="room" id="room-yard">
+                        <div class="room-title"><span><i class="fas fa-tree"></i> 마당</span></div>
+                        <div class="room-chars" id="chars-yard"></div>
+                    </div>
+                    <div class="room" id="room-ancestor">
+                        <div class="room-title"><span><i class="fas fa-door-closed"></i> 안방/제사방</span></div>
+                        <div class="room-chars" id="chars-ancestor"></div>
+                    </div>
+                </div>
+                <div class="empty-state" style="display:none;" id="mapEmpty">다음 날로 넘어가면 캐릭터들이 행동을 시작합니다.</div>
+            </div>
+
+            <!-- Tab 3: 기록 (Log) -->
+            <div id="view-log" class="view">
+                <div class="log-list" id="logList">
+                    <p class="empty-state">아직 기록된 설날 이야기가 없습니다.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <button class="next-day-btn" onclick="nextDay()">
+        <i class="fas fa-forward"></i>
+    </button>
+
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('roster')">
+            <i class="fas fa-users"></i>
+            명단
+        </button>
+        <button class="tab-btn" onclick="switchTab('map')">
+            <i class="fas fa-home"></i>
+            방 구경
+        </button>
+        <button class="tab-btn" onclick="switchTab('log')">
+            <i class="fas fa-scroll"></i>
+            기록
+        </button>
+    </nav>
+
+    <!-- Character Detail Modal -->
+    <div class="modal-overlay" id="charModal" onclick="closeModal(event)">
+        <div class="modal">
+            <h3 id="modalTitle">캐릭터 정보</h3>
+            <div id="modalContent"></div>
+            <button onclick="document.getElementById('charModal').style.display='none'" style="margin-top:20px; width:100%; padding:10px; border:none; background:#eee; border-radius:8px; cursor:pointer;">닫기</button>
+        </div>
+    </div>
+
+    <!-- Update 4: Info Modal -->
+    <div class="modal-overlay" id="infoModal" onclick="closeModal(event)">
+        <div class="modal">
+            <h3>정보</h3>
+            <div class="info-content">
+                <p>이름을 입력해 설날의 풍경을 시뮬레이션하는 웹 앱입니다.</p>
+                <hr style="border:0; border-top:1px solid #eee; margin:16px 0;">
+                <p><strong>License Info</strong></p>
+                <p>
+                    <i class="fas fa-font"></i> <strong>Fonts:</strong><br>
+                    Gowun Batang & Gowun Dodum<br>
+                    <span class="info-link">Designed by Gowun (OFL Open Font License)</span>
+                </p>
+                <p>
+                    <i class="fas fa-icons"></i> <strong>Icons:</strong><br>
+                    Font Awesome Free 6.0.0<br>
+                    <span class="info-link">(CC BY 4.0 License)</span>
+                </p>
+            </div>
+            <button onclick="document.getElementById('infoModal').style.display='none'" style="margin-top:20px; width:100%; padding:10px; border:none; background:#eee; border-radius:8px; cursor:pointer;">닫기</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
