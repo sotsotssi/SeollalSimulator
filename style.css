@@ -46,19 +46,23 @@ header {
 }
 
 .header-left {
-    width: 60px;
+    width: 80px;
 }
 
 .header-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--primary-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-right {
+    width: 80px;
     display: flex;
     gap: 8px;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .info-btn {
@@ -84,7 +88,7 @@ main {
     flex: 1;
     overflow-y: auto;
     position: relative;
-    padding-bottom: 80px;
+    padding-bottom: 120px; 
     scroll-behavior: smooth;
 }
 

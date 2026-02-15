@@ -872,7 +872,7 @@ function loadData() {
     
     try {
         const data = JSON.parse(json);
-        day = data.day || 1;
+        day = data.day || 0;
         characters = data.characters || [];
         logs = data.logs || [];
         
@@ -889,7 +889,7 @@ function loadData() {
 function resetRoster() {
     if(!confirm("현재 명단은 유지하되, 모든 관계와 로그를 초기화하시겠습니까?")) return;
     
-    day = 1;
+    day = 0;
     logs = [];
     characters.forEach(c => {
         c.relationships = {};
@@ -913,7 +913,7 @@ function resetRoster() {
 function hardReset() {
     if(!confirm("모든 데이터를 삭제하고 처음 상태로 돌아가시겠습니까?")) return;
     
-    day = 1;
+    day = 0;
     characters = [];
     logs = [];
     localStorage.removeItem(STORAGE_KEY);
